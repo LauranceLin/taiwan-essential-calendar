@@ -2,9 +2,9 @@
 
 為台灣日常生活精選的繁體中文日曆訂閱，提供符合 RFC 5545 標準的 `.ics` 檔案。
 
-> 收錄一般生活在台灣的人合理可能在意或認得的日期，不為了完整而追求完整。
+> 收錄多數生活在台灣的人在意或認得的日期。
 
-這是一個刻意保持精簡的個人維護專案，不是政府官方日曆，也不等同每年公布的政府機關辦公日曆。
+這是一個個人維護專案，並非政府官方日曆，也不等同每年公布的政府機關辦公日曆。
 
 ## 訂閱日曆
 
@@ -15,7 +15,7 @@
 | Taiwan Traditional | 未重複法定假日的重要傳統節日 | `https://calendar.laurancelin.com/tw-traditional.ics` |
 | Taiwan Modern | 台灣普遍認得的現代節日 | `https://calendar.laurancelin.com/tw-modern.ics` |
 
-所有日曆都使用繁體中文活動名稱，並提供 **2026 至 2125 年**的明確國曆全天日期。日曆名稱保留英文。
+所有日曆都使用繁體中文活動名稱，並提供 **2026 至 2125 年**的明確國曆全天日期。
 
 ## 收錄內容
 
@@ -38,7 +38,7 @@
 - 臺灣光復節
 - 行憲紀念日
 
-這份日曆只描述有意義的假日日期，刻意不收錄補假、補班、調整上班日或臨時一次性安排。
+這份日曆只描述假日日期，不收錄補假、補班、調整上班日或臨時一次性安排。
 
 ### Taiwan Traditional
 
@@ -62,21 +62,19 @@
 
 Essential 由程式自動合併 Public Holidays、Traditional 與 Modern，沒有獨立維護的活動清單。
 
-同一天的不同活動會分開保留。例如 12 月 25 日同時包含「行憲紀念日」與「聖誕節」。
-
 ## 收錄原則
 
 這份日曆想回答的是：
 
-> 今天是不是台灣生活中重要的法定假日、傳統節日，或大家普遍熟悉的現代節日？
+> 今天是不是台灣生活中重要的法定假日、傳統節日或大家普遍熟悉的現代節日？
 
-本專案不是節日百科全書，會刻意排除冷僻的職業節日、專業紀念日、宗教神誕，以及只為了名目完整而加入的日期。
+本專案會排除冷僻的職業節日、專業紀念日以及宗教神誕等日期。
 
 ## 日期計算
 
-農曆轉國曆、清明與冬至的日期使用 [`lunar-javascript`](https://github.com/6tail/lunar-javascript) 計算。這個套件以壽星天文曆演算法為基礎，不需要在專案中維護一份手動複製的百年對照表。
+農曆轉國曆、清明與冬至的日期使用 [`lunar-javascript`](https://github.com/6tail/lunar-javascript) 計算。
 
-產生器只使用正常農曆月份，不會因閏月重複產生七夕、中元節等活動。小年夜與除夕則由正月初一往前推算兩天與一天，不假設臘月固定有幾天。
+產生器只使用正常農曆月份，不會因閏月重複產生七夕、中元節等活動。小年夜與除夕則由正月初一往前推算兩天與一天。
 
 所有農曆節日與節氣最後都會轉成明確的國曆全天事件，因此 Apple Calendar、Google Calendar 或其他客戶端不需要理解農曆重複規則。測試中的代表日期會與[香港天文台公曆與農曆對照表](https://www.hko.gov.hk/tc/gts/time/conversion.htm)交叉確認。
 
@@ -178,31 +176,11 @@ _site/
 
 四份日曆因此能直接從網域根目錄訂閱。自訂 GitHub Actions 部署不需要儲存庫中的 `CNAME` 檔案。
 
-## 自訂網域與 DNS
-
-正式網域是 `calendar.laurancelin.com`。DNS 只需要：
-
-```text
-Type:   CNAME
-Name:   calendar
-Target: laurancelin.github.io
-```
-
-自訂網域在 Repository Settings → Pages 設定，DNS 生效後開啟 **Enforce HTTPS**。這些設定不需要、也不應修改既有的 `laurancelin.com` 網站。
-
-可用下列指令確認正式日曆的回應：
-
-```bash
-curl -I https://calendar.laurancelin.com/tw-essential.ics
-```
-
 預期狀態為 `200`，Content-Type 為 `text/calendar`。
 
 ## Apple Calendar 訂閱
 
-在 iPhone 或 iPad 上，直接開啟網站並點選訂閱按鈕即可。也可以前往「設定 → App → 行事曆 → 行事曆帳號 → 加入帳號 → 其他 → 加入已訂閱的行事曆」，貼上 HTTPS 訂閱網址。
-
-在 macOS 上，開啟「行事曆」，選擇「檔案 → 新增行事曆訂閱」，貼上 HTTPS 網址並設定自動更新頻率。
+在 iPhone、iPad 或 macOS 上，直接開啟網站並點選訂閱按鈕即可，也可以前往「設定 → App → 行事曆 → 行事曆帳號 → 加入帳號 → 其他 → 加入已訂閱的行事曆」，貼上 HTTPS 訂閱網址。
 
 ## 維護方式
 
