@@ -7,8 +7,8 @@ const feeds = await createFeeds();
 test("all feeds cover 2026 through 2125", () => {
   assert.equal(feeds.public.events.length, 16 * 100);
   assert.equal(feeds.traditional.events.length, 5 * 100);
-  assert.equal(feeds.modern.events.length, 6 * 100);
-  assert.equal(feeds.essential.events.length, 27 * 100);
+  assert.equal(feeds.modern.events.length, 5 * 100);
+  assert.equal(feeds.essential.events.length, 26 * 100);
 
   for (const feed of Object.values(feeds)) {
     for (const event of feed.events) {
@@ -17,6 +17,11 @@ test("all feeds cover 2026 through 2125", () => {
       assert.ok(year >= 2026 && year <= 2125, `${event.summary} is out of range`);
     }
   }
+});
+
+test("Modern and Essential exclude New Year's Eve", () => {
+  assert.ok(feeds.modern.events.every((event) => event.summary !== "跨年夜"));
+  assert.ok(feeds.essential.events.every((event) => event.summary !== "跨年夜"));
 });
 
 test("Essential is exactly the union of the three component feeds", () => {
@@ -65,7 +70,7 @@ test("UIDs are unique within every feed and stable between builds", async () => 
 
 test("the final supported year generates lunar and solar events", () => {
   const lastYearEvents = feeds.essential.events.filter((event) => event.date.startsWith("2125-"));
-  assert.equal(lastYearEvents.length, 27);
+  assert.equal(lastYearEvents.length, 26);
   assert.ok(lastYearEvents.some((event) => event.summary === "正月初一" && event.date === "2125-02-03"));
   assert.ok(lastYearEvents.some((event) => event.summary === "清明節"));
   assert.ok(lastYearEvents.some((event) => event.summary === "冬至"));

@@ -1,27 +1,25 @@
 # Taiwan Essential Calendar
 
-Curated Traditional Chinese (`zh-TW`) Taiwan calendar feeds in standards-compliant RFC 5545 `.ics` format.
+為台灣日常生活精選的繁體中文日曆訂閱，提供符合 RFC 5545 標準的 `.ics` 檔案。
 
-> Include dates that an ordinary person living in Taiwan is reasonably likely to care about or recognize in everyday life. Avoid completeness for completeness's sake.
+> 收錄一般生活在台灣的人合理可能在意或認得的日期，不為了完整而追求完整。
 
-The project is intentionally small and opinionated. It is a community-maintained calendar, not an official Taiwan government calendar, and it does not reproduce the annual government office work calendar.
+這是一個刻意保持精簡的個人維護專案，不是政府官方日曆，也不等同每年公布的政府機關辦公日曆。
 
-## Calendar feeds
+## 訂閱日曆
 
-The stable production subscription URLs are:
-
-| Feed | Purpose | Subscription URL |
+| 日曆 | 內容 | 訂閱網址 |
 | --- | --- | --- |
-| **Taiwan Essential** (recommended) | Union of the other three feeds | `https://calendar.laurancelin.com/tw-essential.ics` |
-| Taiwan Public Holidays | Important holiday dates | `https://calendar.laurancelin.com/tw-public-holidays.ics` |
-| Taiwan Traditional | Important traditional observances not already in Public Holidays | `https://calendar.laurancelin.com/tw-traditional.ics` |
-| Taiwan Modern | Widely recognized modern observances in Taiwan | `https://calendar.laurancelin.com/tw-modern.ics` |
+| **Taiwan Essential**（推薦） | 下列三份日曆的聯集 | `https://calendar.laurancelin.com/tw-essential.ics` |
+| Taiwan Public Holidays | 重要法定假日 | `https://calendar.laurancelin.com/tw-public-holidays.ics` |
+| Taiwan Traditional | 未重複法定假日的重要傳統節日 | `https://calendar.laurancelin.com/tw-traditional.ics` |
+| Taiwan Modern | 台灣普遍認得的現代節日 | `https://calendar.laurancelin.com/tw-modern.ics` |
 
-All feeds contain explicit Gregorian all-day dates for **2026 through 2125 inclusive**. Event summaries are Traditional Chinese. Calendar names remain English.
+所有日曆都使用繁體中文活動名稱，並提供 **2026 至 2125 年**的明確國曆全天日期。日曆名稱保留英文。
 
-### Exact event lists
+## 收錄內容
 
-**Taiwan Public Holidays**
+### Taiwan Public Holidays
 
 - 元旦
 - 小年夜
@@ -40,9 +38,9 @@ All feeds contain explicit Gregorian all-day dates for **2026 through 2125 inclu
 - 臺灣光復節
 - 行憲紀念日
 
-This feed intentionally excludes substitute holidays, compensatory holidays, adjusted workdays, make-up workdays, and temporary one-off schedule changes.
+這份日曆只描述有意義的假日日期，刻意不收錄補假、補班、調整上班日或臨時一次性安排。
 
-**Taiwan Traditional**
+### Taiwan Traditional
 
 - 元宵節
 - 七夕
@@ -50,67 +48,74 @@ This feed intentionally excludes substitute holidays, compensatory holidays, adj
 - 重陽節
 - 冬至
 
-Traditional holidays already in Public Holidays are not duplicated here.
+已收錄在 Public Holidays 的傳統節日不會在這裡重複出現。
 
-**Taiwan Modern**
+### Taiwan Modern
 
-- 情人節 — February 14
-- 母親節 — second Sunday of May
-- 父親節 — August 8
-- 萬聖節 — October 31
-- 聖誕節 — December 25
-- 跨年夜 — December 31
+- 情人節：2 月 14 日
+- 母親節：5 月第二個星期日
+- 父親節：8 月 8 日
+- 萬聖節：10 月 31 日
+- 聖誕節：12 月 25 日
 
-**Taiwan Essential** is generated in code as Public Holidays + Traditional + Modern. It has no separate event definitions. Coincident events remain independent; December 25 contains both 行憲紀念日 and 聖誕節.
+### Taiwan Essential
 
-## Inclusion philosophy
+Essential 由程式自動合併 Public Holidays、Traditional 與 Modern，沒有獨立維護的活動清單。
 
-The calendar should approximately answer:
+同一天的不同活動會分開保留。例如 12 月 25 日同時包含「行憲紀念日」與「聖誕節」。
 
-> Is today an important public holiday, traditional festival, or widely recognized modern observance in Taiwan?
+## 收錄原則
 
-It deliberately excludes many obscure occupational, specialist, religious, and commemorative observances. The goal is useful curation, not an encyclopedia. See [CONTRIBUTING.md](CONTRIBUTING.md) before proposing an addition or removal.
+這份日曆想回答的是：
 
-## Date calculation
+> 今天是不是台灣生活中重要的法定假日、傳統節日，或大家普遍熟悉的現代節日？
 
-Lunar-to-Gregorian conversion and the dates of 清明 and 冬至 use [`lunar-javascript`](https://github.com/6tail/lunar-javascript), a maintained, dependency-free implementation based on the Shou Xing astronomical calendar algorithms. The generator requests ordinary positive-numbered lunar months, so a festival is not accidentally repeated in a leap month. 小年夜 and 除夕 are derived by subtracting two and one days from lunar New Year rather than assuming the preceding lunar month has a fixed length.
+本專案不是節日百科全書，會刻意排除冷僻的職業節日、專業紀念日、宗教神誕，以及只為了名目完整而加入的日期。
 
-Every calculated result becomes an explicit Gregorian `VALUE=DATE` event. Calendar clients do not need to understand lunar recurrence rules or solar terms. Tests cross-check representative fixtures against the [Hong Kong Observatory Gregorian–Lunar conversion tables](https://www.hko.gov.hk/en/gts/time/conversion.htm), including a leap-seventh-month year.
+## 日期計算
 
-## iCalendar behavior
+農曆轉國曆、清明與冬至的日期使用 [`lunar-javascript`](https://github.com/6tail/lunar-javascript) 計算。這個套件以壽星天文曆演算法為基礎，不需要在專案中維護一份手動複製的百年對照表。
 
-The serializer produces UTF-8 RFC 5545 data with:
+產生器只使用正常農曆月份，不會因閏月重複產生七夕、中元節等活動。小年夜與除夕則由正月初一往前推算兩天與一天，不假設臘月固定有幾天。
 
-- `VERSION:2.0`, `CALSCALE:GREGORIAN`, and `METHOD:PUBLISH`;
-- CRLF line endings and UTF-8-aware 75-octet line folding;
-- escaped TEXT values and `LANGUAGE=zh-TW` summaries;
-- all-day `DTSTART;VALUE=DATE` and exclusive next-day `DTEND;VALUE=DATE`;
-- `TRANSP:TRANSPARENT`;
-- deterministic UIDs in the `calendar.laurancelin.com` namespace;
-- a deterministic `DTSTAMP`, making byte-for-byte repeat builds possible.
+所有農曆節日與節氣最後都會轉成明確的國曆全天事件，因此 Apple Calendar、Google Calendar 或其他客戶端不需要理解農曆重複規則。測試中的代表日期會與[香港天文台公曆與農曆對照表](https://www.hko.gov.hk/tc/gts/time/conversion.htm)交叉確認。
 
-The test suite parses every generated file with [`ical.js`](https://github.com/mozilla-comm/ical.js) and checks round-trip summaries, all-day semantics, unique/stable UIDs, UTF-8 validity, line lengths, and deterministic output.
+## iCalendar 格式
 
-## Architecture
+產生的檔案遵循 RFC 5545，包含：
+
+- UTF-8 編碼與 CRLF 換行；
+- `VERSION:2.0`、`CALSCALE:GREGORIAN` 與 `METHOD:PUBLISH`；
+- 依 UTF-8 位元組正確進行 75 octet 折行；
+- `LANGUAGE=zh-TW` 的繁體中文標題；
+- `DTSTART;VALUE=DATE` 全天開始日期；
+- 使用下一天作為排他性 `DTEND;VALUE=DATE`；
+- `TRANSP:TRANSPARENT`；
+- 位於 `calendar.laurancelin.com` 命名空間的固定 UID；
+- 可重複產生完全相同檔案的固定建置資訊。
+
+測試會使用 [`ical.js`](https://github.com/mozilla-comm/ical.js) 重新解析每一份日曆，確認 UTF-8、全天事件、中文標題、UID 穩定性與輸出確定性。
+
+## 專案結構
 
 ```text
-data/                       one source definition for every event
-src/date-calculation.js     Gregorian, lunar, and solar-term rules
-src/events.js               event expansion and Essential composition
-src/ics.js                  RFC 5545 serialization
-src/generate.js             feed writer
-scripts/                    local generation and site assembly
-tests/                      date fixtures and full-feed invariants
-site/                       plain HTML, CSS, and JavaScript
-dist/                       generated local feeds (ignored)
-_site/                      generated Pages artifact (ignored)
+data/                       每個活動唯一的來源定義
+src/date-calculation.js     國曆、農曆與節氣規則
+src/events.js               展開活動並組合 Essential
+src/ics.js                  RFC 5545 序列化
+src/generate.js             寫出日曆檔案
+scripts/                    本機產生與網站組裝指令
+tests/                      日期 fixture 與完整日曆檢查
+site/                       純 HTML、CSS 與 JavaScript 網站
+dist/                       本機產生的日曆檔案，不提交 Git
+_site/                      GitHub Pages 部署成品，不提交 Git
 ```
 
-No database, server, runtime scraping, or network call is involved in generation.
+產生日曆時不需要資料庫、伺服器、網路爬蟲或執行階段 API。
 
-## Local development
+## 本機開發
 
-Requirements: Node.js 22 or newer and Corepack.
+需要 Node.js 22 以上版本與 Corepack。
 
 ```bash
 corepack enable
@@ -118,46 +123,48 @@ corepack install
 pnpm install --frozen-lockfile
 ```
 
-Run the tests:
+執行測試：
 
 ```bash
 pnpm test
 ```
 
-Generate only the four calendars in `dist/`:
+只產生四份日曆到 `dist/`：
 
 ```bash
 pnpm generate
 ```
 
-Generate the feeds and assemble the complete static site in `_site/`:
+產生日曆並組裝完整網站到 `_site/`：
 
 ```bash
 pnpm build
 ```
 
-Run everything required before a pull request:
+執行提交前的完整檢查：
 
 ```bash
 pnpm check
 ```
 
-To preview the built site locally, serve `_site/` with any static file server. Generated directories are ignored and should not be committed.
+`dist/` 與 `_site/` 都是可重建的成品，不應提交至 Git。
 
-## GitHub Pages deployment
+## GitHub Pages 部署
 
-`.github/workflows/pages.yml` runs on pushes to `main` and manual dispatch. Its build job installs locked dependencies, runs the complete test suite, generates the calendars, builds `_site/`, and uploads that directory as the Pages artifact. A separate deploy job depends on the successful build job and deploys through the protected `github-pages` environment using the official Pages actions.
+`.github/workflows/pages.yml` 會在每次推送到 `main` 時：
 
-Because deploy has `needs: build`, a failed test or build cannot replace the last successful deployment. The workflow does not commit generated output to any branch.
+1. 安裝鎖定版本的相依套件；
+2. 執行完整測試；
+3. 產生四份日曆；
+4. 組裝 `_site/`；
+5. 上傳 GitHub Pages artifact；
+6. 只有在前述步驟成功後才部署。
 
-Repository setup:
+部署工作使用 `needs: build` 等待測試與建置，因此錯誤的提交不會取代前一次成功部署。CI 不會把產生檔案提交回儲存庫。
 
-1. Open **Settings → Pages**.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. Keep or create the `github-pages` environment. Optionally restrict it to the `main` branch.
-4. Push to `main` or run the workflow manually.
+Repository Settings → Pages 的 Source 必須設定為 **GitHub Actions**。
 
-The uploaded artifact has this shape:
+部署成品結構：
 
 ```text
 _site/
@@ -169,42 +176,42 @@ _site/
   assets/
 ```
 
-No repository `CNAME` file is used. GitHub documents that a `CNAME` file does not configure custom domains for custom Actions deployments; configure the domain in repository settings instead.
+四份日曆因此能直接從網域根目錄訂閱。自訂 GitHub Actions 部署不需要儲存庫中的 `CNAME` 檔案。
 
-### MIME type
+## 自訂網域與 DNS
 
-`.ics` is the registered extension for `text/calendar`, and GitHub Pages normally serves it accordingly from a static artifact. Pages does not provide per-file response-header configuration, so the project avoids extra infrastructure solely to append `charset=utf-8`; the content itself is valid UTF-8 and declares no conflicting encoding. After the first deployment, verify the actual response with:
+正式網域是 `calendar.laurancelin.com`。DNS 只需要：
+
+```text
+Type:   CNAME
+Name:   calendar
+Target: laurancelin.github.io
+```
+
+自訂網域在 Repository Settings → Pages 設定，DNS 生效後開啟 **Enforce HTTPS**。這些設定不需要、也不應修改既有的 `laurancelin.com` 網站。
+
+可用下列指令確認正式日曆的回應：
 
 ```bash
 curl -I https://calendar.laurancelin.com/tw-essential.ics
 ```
 
-The expected content type is `text/calendar` (ideally `text/calendar; charset=utf-8`). Also complete a real subscription from Apple Calendar after DNS and HTTPS are active; that end-to-end production check cannot be performed before deployment.
+預期狀態為 `200`，Content-Type 為 `text/calendar`。
 
-## Custom domain and DNS
+## Apple Calendar 訂閱
 
-DNS changes are manual and do not affect the existing website at `https://laurancelin.com`.
+在 iPhone 或 iPad 上，直接開啟網站並點選訂閱按鈕即可。也可以前往「設定 → App → 行事曆 → 行事曆帳號 → 加入帳號 → 其他 → 加入已訂閱的行事曆」，貼上 HTTPS 訂閱網址。
 
-After the GitHub Pages workflow deploys successfully:
+在 macOS 上，開啟「行事曆」，選擇「檔案 → 新增行事曆訂閱」，貼上 HTTPS 網址並設定自動更新頻率。
 
-1. In GitHub account Pages settings, verify ownership of `laurancelin.com` using the TXT record GitHub provides.
-2. In this repository's **Settings → Pages → Custom domain**, enter `calendar.laurancelin.com`.
-3. At the DNS provider, create a `CNAME` record whose host/name is `calendar` and whose target is the owner's Pages hostname, normally `laurancelin.github.io`.
-4. Wait for GitHub's DNS check to succeed.
-5. Enable **Enforce HTTPS** when GitHub makes it available.
+## 維護方式
 
-Do not redirect or otherwise change the apex `laurancelin.com` site.
+本專案由 Laurance Lin 個人維護，目前不徵求節日新增、功能、文件或設計貢獻，也不以社群共筆方式運作。
 
-## Subscribe with Apple Calendar
+若發現日期計算、iCalendar 格式或訂閱功能的客觀錯誤，可以透過 GitHub Issues 提供可重現資訊；是否調整內容與收錄範圍仍由維護者決定。
 
-On iPhone or iPad, opening a `webcal://` subscription link on the project website is the shortest route. If needed, go to **Settings → Apps → Calendar → Calendar Accounts → Add Account → Other → Add Subscribed Calendar**, then paste one of the HTTPS feed URLs.
+## 授權與免責聲明
 
-On macOS, open Calendar and choose **File → New Calendar Subscription**, paste the HTTPS feed URL, and choose an automatic refresh interval.
+原始碼採用 [MIT License](LICENSE)。
 
-After production deployment, verify at least the Essential feed on both iPhone and macOS. Subscription clients may cache remote calendars, so updates are not always immediate.
-
-## License and disclaimer
-
-Released under the [MIT License](LICENSE).
-
-This is a community-maintained open-source project. It is not an official Taiwan government calendar and should not be used as the sole authority for legal deadlines, work schedules, school schedules, or government office closures.
+本專案不是政府官方日曆，不應作為法律期限、工作日、學校行事曆或政府機關辦公安排的唯一依據。

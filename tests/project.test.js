@@ -13,7 +13,7 @@ test("the site links every production feed at its root URL", async () => {
     assert.ok(html.includes(`https://calendar.laurancelin.com/${fileName}`));
     assert.ok(html.includes(`webcal://calendar.laurancelin.com/${fileName}`));
   }
-  assert.match(html, /不是中華民國政府官方日曆/);
+  assert.match(html, /本日曆並非台灣政府官方日曆/);
   assert.match(html, /2026 至 2125/);
 });
 
