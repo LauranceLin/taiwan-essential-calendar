@@ -1,0 +1,13 @@
+{
+  "id": "modern",
+  "calendarName": "Taiwan Modern",
+  "description": "Widely recognized modern observances in Taiwan.",
+  "events": [
+    { "id": "valentines-day", "summary": "情人節", "rule": { "type": "gregorian", "month": 2, "day": 14 } },
+    { "id": "mothers-day", "summary": "母親節", "rule": { "type": "nth-weekday", "month": 5, "weekday": 0, "nth": 2 } },
+    { "id": "fathers-day", "summary": "父親節", "rule": { "type": "gregorian", "month": 8, "day": 8 } },
+    { "id": "halloween", "summary": "萬聖節", "rule": { "type": "gregorian", "month": 10, "day": 31 } },
+    { "id": "christmas-day", "summary": "聖誕節", "rule": { "type": "gregorian", "month": 12, "day": 25 } },
+    { "id": "new-years-eve", "summary": "跨年夜", "rule": { "type": "gregorian", "month": 12, "day": 31 } }
+  ]
+}

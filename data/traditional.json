@@ -1,0 +1,12 @@
+{
+  "id": "traditional",
+  "calendarName": "Taiwan Traditional",
+  "description": "Important traditional observances not already included in Taiwan Public Holidays.",
+  "events": [
+    { "id": "lantern-festival", "summary": "元宵節", "rule": { "type": "lunar", "month": 1, "day": 15 } },
+    { "id": "qixi-festival", "summary": "七夕", "rule": { "type": "lunar", "month": 7, "day": 7 } },
+    { "id": "ghost-festival", "summary": "中元節", "rule": { "type": "lunar", "month": 7, "day": 15 } },
+    { "id": "double-ninth-festival", "summary": "重陽節", "rule": { "type": "lunar", "month": 9, "day": 9 } },
+    { "id": "winter-solstice", "summary": "冬至", "rule": { "type": "solar-term", "term": "冬至", "month": 12, "searchStart": 20, "searchEnd": 23 } }
+  ]
+}

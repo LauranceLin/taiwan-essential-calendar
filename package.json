@@ -1,0 +1,24 @@
+{
+  "name": "taiwan-essential-calendar",
+  "version": "1.0.0",
+  "description": "Curated Traditional Chinese Taiwan calendar feeds in RFC 5545 format.",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "generate": "node scripts/generate.js",
+    "test": "node --test",
+    "check": "pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "lunar-javascript": "1.7.7"
+  },
+  "devDependencies": {
+    "ical.js": "2.2.1"
+  },
+  "license": "MIT"
+}

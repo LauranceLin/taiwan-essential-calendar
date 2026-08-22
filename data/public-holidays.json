@@ -1,0 +1,23 @@
+{
+  "id": "public-holidays",
+  "calendarName": "Taiwan Public Holidays",
+  "description": "Important public holiday dates in Taiwan, without substitute holidays or adjusted workdays.",
+  "events": [
+    { "id": "new-years-day", "summary": "元旦", "rule": { "type": "gregorian", "month": 1, "day": 1 } },
+    { "id": "little-new-years-eve", "summary": "小年夜", "rule": { "type": "lunar-new-year-offset", "days": -2 } },
+    { "id": "lunar-new-years-eve", "summary": "除夕", "rule": { "type": "lunar-new-year-offset", "days": -1 } },
+    { "id": "lunar-new-year-day-1", "summary": "正月初一", "rule": { "type": "lunar", "month": 1, "day": 1 } },
+    { "id": "lunar-new-year-day-2", "summary": "正月初二", "rule": { "type": "lunar", "month": 1, "day": 2 } },
+    { "id": "lunar-new-year-day-3", "summary": "正月初三", "rule": { "type": "lunar", "month": 1, "day": 3 } },
+    { "id": "peace-memorial-day", "summary": "和平紀念日", "rule": { "type": "gregorian", "month": 2, "day": 28 } },
+    { "id": "childrens-day", "summary": "兒童節", "rule": { "type": "gregorian", "month": 4, "day": 4 } },
+    { "id": "qingming-festival", "summary": "清明節", "rule": { "type": "solar-term", "term": "清明", "month": 4, "searchStart": 3, "searchEnd": 6 } },
+    { "id": "labour-day", "summary": "勞動節", "rule": { "type": "gregorian", "month": 5, "day": 1 } },
+    { "id": "dragon-boat-festival", "summary": "端午節", "rule": { "type": "lunar", "month": 5, "day": 5 } },
+    { "id": "mid-autumn-festival", "summary": "中秋節", "rule": { "type": "lunar", "month": 8, "day": 15 } },
+    { "id": "teachers-day", "summary": "教師節", "rule": { "type": "gregorian", "month": 9, "day": 28 } },
+    { "id": "national-day", "summary": "國慶日", "rule": { "type": "gregorian", "month": 10, "day": 10 } },
+    { "id": "taiwan-retrocession-day", "summary": "臺灣光復節", "rule": { "type": "gregorian", "month": 10, "day": 25 } },
+    { "id": "constitution-day", "summary": "行憲紀念日", "rule": { "type": "gregorian", "month": 12, "day": 25 } }
+  ]
+}
